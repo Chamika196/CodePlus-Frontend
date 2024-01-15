@@ -9,7 +9,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
-          
+          <ng-container *ngIf="user !== undefined && user?.roles?.includes('Writer')">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Admin
@@ -19,11 +19,23 @@
               
                <li><hr class="dropdown-divider"></li>
                <li><a class="dropdown-item" [routerLink]="['/admin/blogposts']">Blog Posts</a></li>
-             <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+             <!-- <li><a class="dropdown-item" href="#">Something els e here</a></li> -->
             </ul>
           </li>
-          
+        </ng-container>
         </ul>
+        <div class="d-flex">
+          <ng-container *ngIf="user === undefined; else showLogout">
+            <a [routerLink]="['./login']" class="btn btn-primary">Login</a>
+
+          </ng-container>
+          <ng-template #showLogout>
+            <div class="d-flex align-items-center">
+              <span>{{user?.email}}</span>
+              <button class="btn btn-primary ms-3" (click)="onLogout()">Logout</button>
+            </div>
+          </ng-template>
+        </div>
         
       </div>
     </div>
